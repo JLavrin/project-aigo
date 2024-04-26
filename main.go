@@ -1,29 +1,25 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/JLavrin/project-aigo/config"
+	"github.com/JLavrin/project-aigo/routers"
+	"net/http"
 )
 
-type BaseResponse struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
-}
-
 func main() {
-	router := gin.Default()
 
-	router.GET("/", func(c *gin.Context) {
-		response := BaseResponse{
-			Code:    200,
-			Message: "Hello, World!",
-			Data:    nil,
-		}
+	routerInit := routers.InitRouter()
+	maxHeaderBytes := 1 << 20
 
-		c.JSON(200, response)
-	})
+	server := &http.Server{
+		Addr:           config.Server.Port,
+		Handler:        routerInit,
+		ReadTimeout:    config.Server.ReadTimeout,
+		WriteTimeout:   config.Server.WriteTimeout,
+		MaxHeaderBytes: maxHeaderBytes,
+	}
 
-	err := router.Run(":8080")
+	err := server.ListenAndServe()
 
 	if err != nil {
 		panic(err)
