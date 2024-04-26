@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/JLavrin/project-aigo/api/v1"
+	"github.com/JLavrin/project-aigo/routers/api/v1"
 	"github.com/JLavrin/project-aigo/service/hello"
 	"github.com/gin-gonic/gin"
 )
