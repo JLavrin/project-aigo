@@ -2,15 +2,14 @@ package main
 
 import (
 	"github.com/JLavrin/project-aigo/config"
-	"github.com/JLavrin/project-aigo/models"
-	"github.com/JLavrin/project-aigo/routers"
+	"github.com/JLavrin/project-aigo/db"
+	"github.com/JLavrin/project-aigo/router"
 	"net/http"
 )
 
 func main() {
 
-	routerInit := routers.InitRouter()
-	models.Setup()
+	routerInit := router.InitRouter()
 	maxHeaderBytes := 1 << 20
 
 	server := &http.Server{
@@ -20,6 +19,8 @@ func main() {
 		WriteTimeout:   config.Server.WriteTimeout,
 		MaxHeaderBytes: maxHeaderBytes,
 	}
+
+	db.Setup()
 
 	err := server.ListenAndServe()
 
