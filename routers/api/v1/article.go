@@ -13,7 +13,11 @@ import (
  * @Router /api/v1/article [post]
  */
 func CreateArticle(c *gin.Context) {
-	as := article_service.Article{}
+	as := article_service.Article{
+		Title:         c.PostForm("title"),
+		Content:       c.PostForm("content"),
+		CoverImageUrl: c.PostForm("cover_image_url"),
+	}
 
 	c.JSON(200, as.Create())
 }

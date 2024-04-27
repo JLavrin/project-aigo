@@ -20,9 +20,9 @@ func InitRouter() *gin.Engine {
 	{
 		apiV1.GET("/articles", v1.GetAllArticles)
 		apiV1.GET("/articles/:id", v1.GetArticle)
-		apiV1.POST("/article", v1.CreateArticle)
-		apiV1.PUT("/article/:id", v1.UpdateArticle)
-		apiV1.DELETE("/article/:id", v1.DeleteArticle)
+		apiV1.POST("/articles", v1.CreateArticle)
+		apiV1.PUT("/articles/:id", v1.UpdateArticle)
+		apiV1.DELETE("/articles/:id", v1.DeleteArticle)
 	}
 
 	return r

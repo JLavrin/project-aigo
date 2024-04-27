@@ -1,52 +1,39 @@
 package article_service
 
+import "github.com/JLavrin/project-aigo/models"
+
 type Article struct {
-	ID        int    `json:"id"`
-	Title     string `json:"title"`
-	Body      string `json:"body"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	ID            int    `json:"id"`
+	Title         string `json:"title"`
+	Content       string `json:"content"`
+	CoverImageUrl string `json:"cover_image_url"`
 }
 
-func (a *Article) Create() bool {
-	return true
+func (a *Article) Create() error {
+	article := map[string]interface{}{
+		"title":         a.Title,
+		"content":       a.Content,
+		"coverImageUrl": a.CoverImageUrl,
+	}
+
+	if err := models.AddArticle(article); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (a *Article) Update() bool {
 	return true
 }
 
-func (a *Article) Get() Article {
-	article := Article{
-		ID:        1,
-		Title:     "Hello World",
-		Body:      "This is a test article",
-		CreatedAt: "2021-01-01 00:00:00",
-		UpdatedAt: "2021-01-01 00:00:00",
-	}
-
-	return article
+func (a *Article) Get() *Article {
+	return nil
 }
 
 func (a *Article) GetAll() []Article {
-	articles := []Article{
-		{
-			ID:        1,
-			Title:     "Hello World",
-			Body:      "This is a test article",
-			CreatedAt: "2021-01-01 00:00:00",
-			UpdatedAt: "2021-01-01 00:00:00",
-		},
-		{
-			ID:        2,
-			Title:     "Hello World 2",
-			Body:      "This is a test article 2",
-			CreatedAt: "2021-01-01 00:00:00",
-			UpdatedAt: "2021-01-01 00:00:00",
-		},
-	}
 
-	return articles
+	return []Article{}
 }
 
 func (a *Article) Delete() bool {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/JLavrin/project-aigo/config"
+	"github.com/JLavrin/project-aigo/models"
 	"github.com/JLavrin/project-aigo/routers"
 	"net/http"
 )
@@ -9,6 +10,7 @@ import (
 func main() {
 
 	routerInit := routers.InitRouter()
+	models.Setup()
 	maxHeaderBytes := 1 << 20
 
 	server := &http.Server{

@@ -3,11 +3,14 @@ package config
 import "time"
 
 type DatabaseType struct {
+	Type     string
 	Host     string
 	Port     string
 	User     string
 	Password string
 	Name     string
+	SSLMode  string
+	TimeZone string
 }
 
 type ServerType struct {
@@ -25,9 +28,12 @@ var Server = ServerType{
 }
 
 var Database = DatabaseType{
+	Type:     "postgres",
 	Host:     "localhost",
 	Port:     "5432",
 	User:     "postgres",
-	Password: "password",
+	Password: "postgres",
 	Name:     "postgres",
+	SSLMode:  "disable",
+	TimeZone: "Europe/Berlin",
 }
