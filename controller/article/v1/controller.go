@@ -4,6 +4,7 @@ import (
 	"github.com/JLavrin/project-aigo/src/domain/article/model"
 	"github.com/JLavrin/project-aigo/src/domain/article/service"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"strconv"
 )
 
@@ -11,6 +12,13 @@ func Create(c *gin.Context) {
 	article := model.Article{}
 
 	if err := c.ShouldBindJSON(&article); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	validate := validator.New()
+
+	if err := validate.Struct(article); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -54,6 +62,13 @@ func Update(c *gin.Context) {
 	var id int
 	id, _ = strconv.Atoi(c.Param("id"))
 	article := model.Article{}
+
+	validate := validator.New()
+
+	if err := validate.Struct(article); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := c.ShouldBindJSON(&article); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
