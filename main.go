@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	db.Setup()
 
 	routerInit := router.InitRouter()
 	maxHeaderBytes := 1 << 20
@@ -19,8 +20,6 @@ func main() {
 		WriteTimeout:   config.Server.WriteTimeout,
 		MaxHeaderBytes: maxHeaderBytes,
 	}
-
-	db.Setup()
 
 	err := server.ListenAndServe()
 
