@@ -2,6 +2,7 @@ package router
 
 import (
 	articleV1 "github.com/JLavrin/project-aigo/router/article/v1"
+	pathV1 "github.com/JLavrin/project-aigo/router/path/v1"
 	"github.com/JLavrin/project-aigo/src/domain/home/services"
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +19,7 @@ func InitRouter() *gin.Engine {
 	api := r.Group("/api")
 
 	articleV1.Bind(api)
+	pathV1.Bind(api)
 
 	return r
 }
