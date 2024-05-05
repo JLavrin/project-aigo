@@ -44,5 +44,3 @@ vendor/
 .idea/
 .vscode/
 
-# Dependency management files
-go.sum
