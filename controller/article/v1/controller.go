@@ -8,6 +8,10 @@ import (
 	"strconv"
 )
 
+func CreateByTitle(c *gin.Context) {
+
+}
+
 func Create(c *gin.Context) {
 	article := model.Article{}
 

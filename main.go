@@ -4,10 +4,23 @@ import (
 	"github.com/JLavrin/project-aigo/config"
 	"github.com/JLavrin/project-aigo/db"
 	"github.com/JLavrin/project-aigo/router"
+	"github.com/spf13/viper"
 	"net/http"
 )
 
+type envConfigs struct {
+	OpenAiToken string `mapstructure:"OPEN_AI_TOKEN"`
+}
+
 func main() {
+	viper.SetConfigType("env")
+	viper.AddConfigPath(".env")
+	err := viper.ReadInConfig()
+
+	if err != nil {
+		panic(err)
+	}
+
 	db.Setup()
 
 	routerInit := router.InitRouter()
@@ -21,7 +34,7 @@ func main() {
 		MaxHeaderBytes: maxHeaderBytes,
 	}
 
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 
 	if err != nil {
 		panic(err)

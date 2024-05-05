@@ -40,6 +40,7 @@ vendor/
 *.dylib
 
 # IDE directories
+.env
 .idea/
 .vscode/
 
