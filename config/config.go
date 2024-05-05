@@ -33,7 +33,7 @@ var Database = DatabaseType{
 	Port:     "5432",
 	User:     "postgres",
 	Password: "postgres",
-	Name:     "postgres",
+	Name:     "aigo",
 	SSLMode:  "disable",
 	TimeZone: "Europe/Berlin",
 }
