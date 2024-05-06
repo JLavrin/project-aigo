@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
@@ -15,7 +14,9 @@ func LoadEnvs() Envs {
 	var result map[string]interface{}
 	var envs Envs
 
-	viper.SetConfigType(".env")
+	viper.AddConfigPath(".")
+	viper.SetConfigName(".env")
+	viper.SetConfigType("env")
 
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
@@ -28,8 +29,6 @@ func LoadEnvs() Envs {
 	if err := mapstructure.Decode(&result, &envs); err != nil {
 		panic(err)
 	}
-
-	fmt.Println(envs.Port)
 
 	return envs
 }

@@ -15,8 +15,6 @@ _vendor/
 # Executables
 *.exe
 *.exe~
-*.dll
-*.so
 *.dylib
 
 # Binary and coverage files
@@ -31,16 +29,8 @@ _vendor/
 vendor/
 
 # Go generated files
-*.test
 *.prof
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
 
 # IDE directories
 .env
-.idea/
-.vscode/
 
