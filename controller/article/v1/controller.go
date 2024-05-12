@@ -1,16 +1,14 @@
 package v1
 
 import (
+	"fmt"
+	"github.com/JLavrin/project-aigo/external/openAi"
 	"github.com/JLavrin/project-aigo/src/domain/article/model"
 	"github.com/JLavrin/project-aigo/src/domain/article/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"strconv"
 )
-
-func CreateByTitle(c *gin.Context) {
-
-}
 
 func Create(c *gin.Context) {
 	article := model.Article{}
@@ -25,6 +23,11 @@ func Create(c *gin.Context) {
 	if err := validate.Struct(article); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
+	}
+
+	if article.Content == "" {
+		res, err := openAi.GenerateContent(&article.Title)
+		fmt.Println(res, err)
 	}
 
 	id, err := service.Create(&article)

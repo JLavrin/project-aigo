@@ -21,7 +21,7 @@ type ServerType struct {
 }
 
 var Server = ServerType{
-	Port:         ":8080",
+	Port:         "8080",
 	RunMode:      "debug",
 	ReadTimeout:  60 * time.Second,
 	WriteTimeout: 60 * time.Second,

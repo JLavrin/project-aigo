@@ -1,11 +1,9 @@
 package openAi
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
+	"github.com/JLavrin/project-aigo/util/fetch"
 	"github.com/spf13/viper"
-	"io"
 	"net/http"
 )
 
@@ -17,49 +15,34 @@ type ContentResponse struct {
 	Content map[string]string `json:"content"`
 }
 
-func GenerateContent(title string) (string, error) {
+func GenerateContent(title *string) (string, error) {
 	openAiToken := viper.GetString("OPEN_AI_TOKEN")
+	fmt.Println("openApiToken", openAiToken)
 	url := "/v1/chat/completions"
 	requestBody := map[string]interface{}{
 		"model": "gpt-3.5-turbo",
-		"response_format": map[string]string{
-			"type": "json_object",
-		},
 		"messages": []map[string]string{
 			{
 				"role":    "user",
-				"content": "Generate article content about " + title + ".",
+				"content": "Generate content for title: " + *title + ". It should be about 500 words, plain text",
 			},
 		},
 	}
 
-	requestBodyJSON, err := json.Marshal(requestBody)
-
-	r, err := http.NewRequest("POST", openAiUrl+url, bytes.NewBuffer(requestBodyJSON))
-
+	res, err := fetch.Post(&fetch.Options{
+		Method: "POST",
+		Url:    openAiUrl + url,
+		Headers: http.Header{
+			"Authorization": []string{"Bearer " + openAiToken},
+			"Content-Type":  []string{"application/json"},
+		},
+		Body: requestBody,
+	})
 	if err != nil {
 		return "", err
 	}
 
-	r.Header.Add("Authorization", "Bearer "+openAiToken)
+	fmt.Println("res", res.(map[string]interface{})["choices"].([]interface{})[0].(map[string]interface{})["message"].(map[string]interface{})["content"].(string))
 
-	defer r.Body.Close()
-
-	body, err := io.ReadAll(r.Body)
-
-	if err != nil {
-		return "", err
-	}
-
-	var parsedBody ContentResponse
-
-	err = json.Unmarshal(body, &parsedBody)
-
-	if err != nil {
-		return "", err
-	}
-
-	fmt.Println(parsedBody)
-
-	return "test", nil
+	return "", nil
 }

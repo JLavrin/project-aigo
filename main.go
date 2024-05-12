@@ -17,7 +17,7 @@ func main() {
 	maxHeaderBytes := 1 << 20
 
 	server := &http.Server{
-		Addr:           config.Server.Port,
+		Addr:           "127.0.0.1:" + config.Server.Port,
 		Handler:        routerInit,
 		ReadTimeout:    config.Server.ReadTimeout,
 		WriteTimeout:   config.Server.WriteTimeout,
